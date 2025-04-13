@@ -1,7 +1,12 @@
 <div class="container w-75 mx-auto">
+  <div class="row border-bottom border-2 border-secondary mb-2">
+    <div class="col">
+      <h1 class="text-center">Angular - Firebase - Firestore - CRUD Demo</h1>
+    </div>
+  </div>
   <div class="row">
     <div class="col">
-      <h1>Angular - Firebase - Firestore - CRUD Demo</h1>
+      <h2 class="text-primary">User Management</h2>
       <div>
         <input
           class="form-control my-1 w-50"
@@ -24,62 +29,116 @@
         <button class="btn btn-primary mx-1" (click)="updateUser()">
           Update User
         </button>
-        <button class="btn btn-primary" (click)="resetForm()">
+        <button class="btn btn-primary m-1" (click)="resetUserForm()">
           Clear Form
         </button>
         }
         <!-- if editingUserId is null when a new user is being created -->
         @else {
-        <button class="btn btn-primary mx-1" (click)="addUser()">
+        <button class="btn btn-primary m-1" (click)="addUser()">
           Add User
         </button>
         }
       </div>
-      <hr />
+    </div>
+    <div class="col">
+      <h2 class="text-primary">
+        Task Management @if(selectedUser()){
+        <span>for {{ selectedUser()?.name }}</span>
+        }
+      </h2>
+      <div>
+        <input
+          class="form-control my-1 w-50"
+          type="text"
+          [(ngModel)]="newTask().title"
+          placeholder="Task Title"
+        />
+      </div>
+      <div>
+        <input
+          class="form-control my-1 w-50"
+          type="email"
+          [(ngModel)]="newTask().description"
+          placeholder="Task Description"
+        />
+      </div>
+      <div>
+        <!-- if editingTaskId is not null
+        @if(editingTaskId){
+        <button class="btn btn-primary mx-1" (click)="updateTask()">
+          Update User
+        </button>
+        <button class="btn btn-primary" (click)="resetForm()">
+          Clear Form
+        </button>
+        }
+        <!-- if editingTaskId is null when a new task is being created -->
+        <!-- @else { -->
+        <button
+          class="btn btn-primary m-1"
+          (click)="addTask(selectedUser()?.id ?? '', newTask())"
+        >
+          Add Task
+        </button>
+        <button class="btn btn-primary m-1" (click)="resetTaskForm()">
+          Clear Form
+        </button>
+        <!-- } -->
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-7 border-end">
-      <h2>List of Users</h2>
+  <div class="row row border-top border-2 border-secondary mt-2">
+    <div class="col-sm-6">
+      <h2 class="text-secondary mt-2">List of Users</h2>
+      <h5 class="text-info">Click on the User to add tasks</h5>
       @for(user of users; track user.id){
       <div class="row align-items-center">
         <div class="col-sm-9">
-          {{ $index + 1 }}: {{ user.id }} : {{ user.name }} : ({{ user.email }})
+          <p class="user-select-all" (click)="getTasks(user.id)">
+            {{ $index + 1 }}: {{ user.id }} : {{ user.name }}: {{ user.email }}
+          </p>
         </div>
-        <div class="col">
+        <div class="col-sm-3">
           <div class="hstack">
-            <button class="btn btn-info btn-small m-1" (click)="editUser(user)">
-              Edit
-            </button>
+            <div
+              class="btn btn-small m-1"
+              (click)="editUser(user)"
+            >
+              <span><img src="/edit.svg" width="20px"></span>
+            </div>
             <div class="vr"></div>
-            <button
-              class="btn btn-danger btn-small m-1"
+            <div
+              class="btn btn-small m-1"
               (click)="deleteUser(user.id)"
             >
-              Delete
-            </button>
+            <span><img src="/trash-2.svg" width="20px"></span>    
+          </div>
           </div>
         </div>
       </div>
       }
     </div>
 
-    <div class="col-sm">
-      <h2>List of Users with a Specific Name</h2>
-      <input
-        class="form-control w-50"
-        type="text"
-        [(ngModel)]="searchName"
-        placeholder="Enter the name to display"
-        (ngModelChange)="searchByName()"
-      />
-      @for(u of usersWithName; track u.id){
+    <div class="col-sm-6">
+      <h2 class="text-secondary mt-2">
+        Tasks List @if(selectedUser()){
+        {{ "for " + selectedUser()?.name }}
+        }
+      </h2>
+      @if(selectedUser()){
+      <h5 class="text-info">
+        {{ selectedUser()?.id }} : {{ selectedUser()?.name }} :
+        {{ selectedUser()?.email }}
+      </h5>
+      } @if(selectedUser()){ @for(task of tasks(); track task.taskId){
       <div class="row m-3">
         <div class="col-sm">
-          {{ $index + 1 }}: {{ u.id }} : {{ u.name }} : ({{ u.email }})
+          {{ $index + 1 }}: {{ task.taskId }} : {{ task.title }} :
+          {{ task.description }}
         </div>
       </div>
-      }
+      } }
     </div>
   </div>
 </div>
