@@ -1,62 +1,85 @@
 <div class="container w-75 mx-auto">
-  <h1>Angular - Firebase - Firestore - CRUD Demo</h1>
-  <div>
-    <input
-      class="form-control my-1 w-75"
-      type="text"
-      [(ngModel)]="user.name"
-      placeholder="Name"
-    />
-  </div>
-  <div>
-    <input
-      class="form-control my-1 w-75"
-      type="email"
-      [(ngModel)]="user.email"
-      placeholder="Email"
-    />
-  </div>
-  <div>
-    <!-- if editingUserId is not null -->
-    @if(editingUserId){
-    <button class="btn btn-primary mx-1" (click)="updateUser()">
-      Update User
-    </button>
-    <button class="btn btn-primary" (click)="resetForm()">Clear Form</button>
-    }
-    <!-- if editingUserId is null when a new user is being created -->
-    @else {
-    <button class="btn btn-primary mx-1" (click)="addUser()">Add User</button>
-    }
-  </div>
-  <hr />
-  <div class="col">
-    <h2>List of Users</h2>
-    <div>
-      <ul>
-        @for(user of users; track user.id){
-        <li>
-          {{ user.id }} : {{ user.name }} : ({{ user.email }})
-          <button class="btn btn-info btn-small m-1" (click)="editUser(user)">
-            Edit
-          </button>
-          <button
-            class="btn btn-danger btn-small m-1"
-            (click)="deleteUser(user.id)"
-          >
-            Delete
-          </button>
-        </li>
+  <div class="row">
+    <div class="col">
+      <h1>Angular - Firebase - Firestore - CRUD Demo</h1>
+      <div>
+        <input
+          class="form-control my-1 w-50"
+          type="text"
+          [(ngModel)]="user.name"
+          placeholder="Name"
+        />
+      </div>
+      <div>
+        <input
+          class="form-control my-1 w-50"
+          type="email"
+          [(ngModel)]="user.email"
+          placeholder="Email"
+        />
+      </div>
+      <div>
+        <!-- if editingUserId is not null -->
+        @if(editingUserId){
+        <button class="btn btn-primary mx-1" (click)="updateUser()">
+          Update User
+        </button>
+        <button class="btn btn-primary" (click)="resetForm()">
+          Clear Form
+        </button>
         }
-      </ul>
+        <!-- if editingUserId is null when a new user is being created -->
+        @else {
+        <button class="btn btn-primary mx-1" (click)="addUser()">
+          Add User
+        </button>
+        }
+      </div>
+      <hr />
     </div>
   </div>
-  <div>
-    <ul>
-    <h2>List of Users with Name Alice</h2>
-    @for(u of usersWithNameAlice; track u.id){
-      <li>{{u.id}} : {{u.name}} : ({{u.email}})</li>
-    }
-    </ul>
+  <div class="row">
+    <div class="col-sm-7 border-end">
+      <h2>List of Users</h2>
+      @for(user of users; track user.id){
+      <div class="row align-items-center">
+        <div class="col-sm-9">
+          {{ $index + 1 }}: {{ user.id }} : {{ user.name }} : ({{ user.email }})
+        </div>
+        <div class="col">
+          <div class="hstack">
+            <button class="btn btn-info btn-small m-1" (click)="editUser(user)">
+              Edit
+            </button>
+            <div class="vr"></div>
+            <button
+              class="btn btn-danger btn-small m-1"
+              (click)="deleteUser(user.id)"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    <div class="col-sm">
+      <h2>List of Users with a Specific Name</h2>
+      <input
+        class="form-control w-50"
+        type="text"
+        [(ngModel)]="searchName"
+        placeholder="Enter the name to display"
+        (ngModelChange)="searchByName()"
+      />
+      @for(u of usersWithName; track u.id){
+      <div class="row m-3">
+        <div class="col-sm">
+          {{ $index + 1 }}: {{ u.id }} : {{ u.name }} : ({{ u.email }})
+        </div>
+      </div>
+      }
+    </div>
   </div>
 </div>

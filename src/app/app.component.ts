@@ -13,14 +13,18 @@ import {FormsModule} from '@angular/forms';
 export class AppComponent {
   title = 'CRUD';
 
+  //local array to store users
   users: User[] = [];
+  //meant to track current user
   user: User = {
     id: '',
     name: '',
     email: '',
   }
-
-  usersWithNameAlice: User[] = [];
+  //store the name of the user to search
+  searchName = "";
+  //stores users matching the search name
+  usersWithName: User[] = [];
 
   editingUserId: string | null = null; // Variable to store the ID of the user being edited
 
@@ -30,11 +34,14 @@ export class AppComponent {
     this.userService.getUsers().subscribe(users => {
       this.users = users;
     });
+  }
 
-    this.userService.getUserByName('Alice').subscribe(users =>
-      this.usersWithNameAlice = users
+  searchByName(){
+    this.userService.getUserByName(this.searchName).subscribe((users: User[] )=>
+      this.usersWithName = users
     )
   }
+
 
   addUser() {
     // Check if the user object has valid name and email before adding

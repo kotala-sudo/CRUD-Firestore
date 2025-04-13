@@ -1,11 +1,7 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-// import { environment } from '../environments/environment';
-import { environment } from '../environments/environment.development';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app'
 import { routes } from './app.routes';
-
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
@@ -22,16 +18,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes),
-    // provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideFirestore(() => getFirestore()),
-    { provide: FIREBASE_OPTIONS, useValue: firebaseConfig }  
-
-        // function myFunc() {
-    //   const firestore = inject(AngularFirestore);
-    //   // ... do something with myService
-    // }
-
+    // { provide: FIREBASE_OPTIONS, useValue: firebaseConfig }  
   ]
-};
-// This file is used to configure the Angular application and initialize Firebase.  
+}; 
