@@ -25,10 +25,11 @@ export class TaskComponent {
   });
 
   addTask(userId: string, task: Task) {
-    console.log("Adding task", task);
+    // console.log("Adding task", task);
     if (task.title && task.description) {
       this.taskService.addTask(userId, task); // Add the task using the TaskService
     }
+    this.resetTaskForm();
   }
 
   resetTaskForm() {
