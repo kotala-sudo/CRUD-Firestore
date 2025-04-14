@@ -1,0 +1,20 @@
+<div class="col">
+  <h2 class="text-secondary mt-2">
+    Tasks List @if(selectedUser()){
+    {{ "for " + selectedUser()?.name }}
+    }
+  </h2>
+  @if(selectedUser()){
+  <h5 class="text-info">
+    {{ selectedUser()?.id }} : {{ selectedUser()?.name }} :
+    {{ selectedUser()?.email }}
+  </h5>
+  } @if(selectedUser()){ @for(task of tasks(); track task.taskId){
+  <div class="row m-3">
+    <div class="col-sm">
+      {{ $index + 1 }}: {{ task.taskId }} : {{ task.title }} :
+      {{ task.description }}
+    </div>
+  </div>
+  } }
+</div>

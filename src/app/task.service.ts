@@ -1,5 +1,5 @@
 
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 // make sure you are importing the below from @angular/fire/firestore and not firebase/firestore
 import {
   Firestore,
@@ -26,6 +26,8 @@ export class TaskService {
 
     private firestore = inject(Firestore);
     private taskCollection = collection(this.firestore, 'tasks');
+
+    tasks = signal<Task[]>([]); // Array to store tasks for the selected user
 
   constructor() { }
 

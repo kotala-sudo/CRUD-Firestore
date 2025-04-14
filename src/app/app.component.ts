@@ -5,10 +5,14 @@ import { UserService } from './user.service';
 import {FormsModule} from '@angular/forms';
 import { TaskService } from './task.service';
 import { Task } from './task';
+import { UserComponent } from './user/user.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { TaskComponent } from './task/task.component';
+import { TaskListComponent } from './task-list/task-list.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FormsModule],
+  imports: [RouterOutlet, FormsModule, UserComponent, UserListComponent, TaskComponent, TaskListComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

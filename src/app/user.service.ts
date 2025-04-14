@@ -1,4 +1,4 @@
-import { inject, Injectable} from '@angular/core';
+import { inject, Injectable, signal} from '@angular/core';
 import { User } from './user.model';
 import { Observable} from 'rxjs';
 
@@ -23,6 +23,9 @@ export class UserService {
 
   private firestore = inject(Firestore);
   private userCollection = collection(this.firestore, 'users');
+
+  currentUser = signal< User | null> (null); // signal to store the user being edited
+  selectedUser = signal<User| null>(null); // Signal to track the selected user
 
   //Get users from the database
   getUsers(): Observable<User[]> {
