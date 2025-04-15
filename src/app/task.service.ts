@@ -39,6 +39,13 @@ export class TaskService {
     setDoc(taskRef, task);
   }
 
+  // Another version of addTask if you want the tasks collection to be nested inside
+  //user collection as subcollection.
+  // addTask(userid:User, task: Task){
+  //     const taskCollection = collection(this.firestore, `users/${userid}/tasks`);
+  //     addDoc(taskCollection, task);
+  // }
+
   getTasksByUserId(userId: string) {
     const taskQuery = query(this.taskCollection, where('userId', '==', userId));
     return collectionData(taskQuery, { idField: 'taskId' }) as Observable<Task[]>;
